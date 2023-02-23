@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TitleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,6 @@ Route::controller(AuthController::class)
             Route::Post('/login', 'login');
         }
     );
+
+Route::apiResource('titles', TitleController::class);
+

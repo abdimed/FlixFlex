@@ -32,6 +32,20 @@ class LoginTest extends TestCase
         ]);
 
         $response
+            ->assertOk()
             ->assertJson(fn (AssertableJson $json) => $json->has('auth_token')->etc());
+    }
+
+    public function test_users_can_not_authenticate_with_invalid_login_details()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->postJson('/api/login', [
+            'username' => $user->username,
+            'password' => 'wrongpassword'
+        ]);
+
+        $response
+            ->assertStatus(401);
     }
 }
