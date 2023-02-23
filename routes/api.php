@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\TitleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +27,10 @@ Route::controller(AuthController::class)
 
 Route::apiResource('titles', TitleController::class);
 
+Route::controller(FavoriteController::class)
+    ->middleware('auth:sanctum')
+    ->group(
+        function () {
+            Route::Post('/title/{title_id}/favorite/store', 'store');
+        }
+    );

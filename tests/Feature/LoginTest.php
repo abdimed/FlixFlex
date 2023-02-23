@@ -12,16 +12,6 @@ class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
-    // protected function setUp():void
-    // {
-    //     User::factory()->create(
-    //         [
-    //             'username' => 'admin',
-    //             'password' => 'password',
-    //         ]
-    //     );
-    // }
-
     public function test_user_can_login()
     {
         $user = User::factory()->create();
