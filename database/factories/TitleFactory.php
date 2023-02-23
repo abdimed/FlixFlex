@@ -30,7 +30,8 @@ class TitleFactory extends Factory
         return [
             'name' => $title['title'] ?? $title['name'],
             'type' => $type === 'tv' ? 'serie' : 'movie',
-            'overview' => $title['overview']
+            'overview' => $title['overview'],
+            'popularity' => $title['popularity'],
         ];
     }
 }

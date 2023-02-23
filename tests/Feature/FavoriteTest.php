@@ -23,6 +23,7 @@ class FavoriteTest extends TestCase
 
         $response->assertCreated();
 
-        $this->assertTrue($user->favorites->contains($title->id));
+        $this->assertTrue($user->favorites->contains($title->id));;
     }
+
 }

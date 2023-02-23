@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->enum('type', ['movie', 'serie']);
             $table->longText('overview');
+            $table->float('popularity');
             $table->timestamps();
         });
     }

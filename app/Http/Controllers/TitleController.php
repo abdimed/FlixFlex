@@ -13,4 +13,8 @@ class TitleController extends Controller
         return  TitleResource::collection(Title::paginate(10));
     }
 
+    public function show(Title $title)
+    {
+        return TitleResource::make($title);
+    }
 }
