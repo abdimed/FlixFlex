@@ -19,7 +19,7 @@ class FavoriteTest extends TestCase
         $title = Title::factory()->create();
 
         $response = $this->actingAs($user)
-            ->postJson('/api/title/' . $title->id . '/favorite/store');
+            ->postJson('/api/favorites/' . $title->id . '/store');
 
         $response->assertCreated();
 
@@ -33,10 +33,27 @@ class FavoriteTest extends TestCase
         $title = Title::factory()->create();
 
         $response = $this->actingAs($user)
-            ->postJson('/api/title/' . $title->id . '/favorite/delete');
+            ->postJson('/api/favorites/' . $title->id . '/delete');
 
         $response->assertSuccessful();
 
         $this->assertFalse($user->favorites->contains($title->id));;
+    }
+
+    public function test_user_can_view_the_list_of_my_facorite_movies_and_series()
+    {
+
+        $user = User::factory()->create();
+
+        $titles = Title::factory(2)->create();
+
+        $user->favorites()->attach($titles);
+
+        $response = $this->actingAs($user)
+            ->getJson('/api/favorites');
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonCount(2, 'data');
     }
 }

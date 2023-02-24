@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TitleResource;
 use App\Models\Title;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -9,6 +10,16 @@ use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
 {
+
+    public function index()
+    {
+        $user_id = auth()->user()->id;
+
+        $user = User::with('favorites')->findOrFail($user_id);
+
+        return TitleResource::collection($user->favorites);
+    }
+
     public function store($title_id): JsonResponse
     {
         $user_id = auth()->user()->id;
