@@ -18,6 +18,7 @@ class TitleResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'type' => $this->type,
+            'popularity' => $this->popularity,
             'overview' => $this->overview,
         ];
     }

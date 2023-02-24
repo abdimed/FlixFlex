@@ -30,6 +30,6 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
-        \App\Models\Title::factory(10)->create();
+        \App\Models\Title::factory(30)->create();
     }
 }
