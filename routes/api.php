@@ -20,12 +20,15 @@ use Illuminate\Support\Facades\Route;
 Route::controller(AuthController::class)
     ->group(
         function () {
-            Route::Post('/register', 'register');
-            Route::Post('/login', 'login');
+            Route::Post('register', 'register');
+            Route::Post('login', 'login');
         }
     );
 
+
 Route::apiResource('titles', TitleController::class);
+
+Route::get('search/title', [TitleController::class, 'search']);
 
 Route::controller(FavoriteController::class)
     ->middleware('auth:sanctum')

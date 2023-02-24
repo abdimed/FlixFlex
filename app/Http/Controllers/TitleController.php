@@ -17,4 +17,9 @@ class TitleController extends Controller
     {
         return TitleResource::make($title);
     }
+
+    public function search(Request $request)
+    {
+        return TitleResource::collection(Title::where('name', 'LIKE', '%' . $request->name . '%')->get());
+    }
 }
