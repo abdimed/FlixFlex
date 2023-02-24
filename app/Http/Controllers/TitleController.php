@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchRequest;
 use Illuminate\Http\Request;
 use App\Http\Resources\TitleResource;
 use App\Models\Title;
@@ -20,14 +21,8 @@ class TitleController extends Controller
         return TitleResource::make($title);
     }
 
-    public function search(Request $request)
+    public function search(SearchRequest $request)
     {
-        $request->validate(['name' => 'required']);
-
-        $titles = TitleResource::collection(Title::where('name', 'LIKE', '%' . $request->name . '%')->paginate(10));
-
-        $titles->isEmpty() ? $response = response()->json(['message' => 'no records found']) : $response = $titles;
-
-        return $response;
+        return TitleResource::collection(Title::where('name', 'LIKE', "%$request->keyword%")->paginate(10));
     }
 }

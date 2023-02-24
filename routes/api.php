@@ -26,9 +26,9 @@ Route::controller(AuthController::class)
     );
 
 
-Route::apiResource('titles', TitleController::class);
+Route::apiResource('/titles', TitleController::class);
 
-Route::get('search/title', [TitleController::class, 'search']);
+Route::get('/search', [TitleController::class, 'search']);
 
 Route::controller(FavoriteController::class)
     ->middleware('auth:sanctum')

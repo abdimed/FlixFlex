@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Title;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class TitleTest extends TestCase
@@ -49,9 +50,13 @@ class TitleTest extends TestCase
 
     public function test_users_can_view_the_details_of_a_movie_or_serie()
     {
-        $response = $this->getJson('/api/titles', ['title' => Title::factory()->create()]);
+        $title = Title::factory()->create();
 
-        $response->assertStatus(200);
+        $response = $this->getJson('/api/titles', [$title]);
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonFragment(['id' => $title->id]);
     }
 
     public function test_users_can_search_a_movie_or_serie()
@@ -59,8 +64,8 @@ class TitleTest extends TestCase
 
         $title = Title::factory()->create();
 
-        $response = $this->getJson('/api/search/title', ['name' => $title->name]);
+        $response = $this->getJson('/api/search?keyword=' . $title->name);
 
-        $response->assertJsonFragment(['name' => $title->name]);
+        $response->assertJsonFragment(['id' => $title->id]);
     }
 }
