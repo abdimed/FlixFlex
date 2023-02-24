@@ -30,8 +30,4 @@ class User extends Authenticatable
         return $this->belongsToMany(Title::class, 'favorite_user', 'user_id', 'title_id');
     }
 
-    public function hasFavoriteTitle($title_id)
-    {
-        return $this->favorites->contains($title_id);
-    }
 }

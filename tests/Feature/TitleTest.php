@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Title;
+use App\Models\Trailer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -61,11 +62,22 @@ class TitleTest extends TestCase
 
     public function test_users_can_search_a_movie_or_serie()
     {
-
         $title = Title::factory()->create();
 
         $response = $this->getJson('/api/search?keyword=' . $title->name);
 
         $response->assertJsonFragment(['id' => $title->id]);
+    }
+
+    public function test_users_can_watch_trailer()
+    {
+        $title = Title::factory()
+            ->has(Trailer::factory())
+            ->create();
+
+        $response = $this->getJson('/api/titles/' . $title->id . '/trailer');
+
+        $response->assertStatus(200)
+            ->assertJsonFragment(['trailer' => $title->trailer->url]);
     }
 }

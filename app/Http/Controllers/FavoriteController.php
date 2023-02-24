@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\TitleResource;
-use App\Models\Title;
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
 {
@@ -20,16 +17,15 @@ class FavoriteController extends Controller
         return TitleResource::collection($user->favorites);
     }
 
-    public function store($title_id): JsonResponse
+    public function store($title_id)
     {
         $user_id = auth()->user()->id;
 
         $user = User::findOrFail($user_id);
 
-        $title = Title::findOrFail($title_id);
-
-        if ($user->hasFavoriteTitle($title_id)) {
+        if ($user->favorites->contains($title_id)) {
             return response()->Json([
+                'status' => 'fail',
                 'message' => 'you already have this title on your favorite list',
             ]);
         }
@@ -38,7 +34,7 @@ class FavoriteController extends Controller
 
         return response()->Json([
             'status' => 'success',
-            'message' => $title->name . ' was successfuly added to ' . $user->username . 'favorite list',
+            'message' => 'title  was successfuly added to ' . $user->username . 'favorite list',
         ], 201);
     }
 
@@ -48,10 +44,9 @@ class FavoriteController extends Controller
 
         $user = User::findOrFail($user_id);
 
-        $title = Title::findOrFail($title_id);
-
-        if (!$user->hasFavoriteTitle($title_id)) {
+        if (!$user->favorites->contains($title_id)) {
             return response()->Json([
+                'status' => 'fail',
                 'message' => 'you do not have this title on your favorite list',
             ]);
         }
@@ -60,7 +55,7 @@ class FavoriteController extends Controller
 
         return response()->Json([
             'status' => 'success',
-            'message' => $title->name . ' was successfuly removed from ' . $user->username . 'favorite list',
+            'message' => 'title was successfuly removed from ' . $user->username . 'favorite list',
         ], 201);
     }
 }

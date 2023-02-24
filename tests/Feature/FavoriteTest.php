@@ -19,7 +19,7 @@ class FavoriteTest extends TestCase
         $title = Title::factory()->create();
 
         $response = $this->actingAs($user)
-            ->postJson('/api/favorites/' . $title->id . '/store');
+            ->postJson('/api/user/favorites/' . $title->id . '/store');
 
         $response->assertCreated();
 
@@ -33,7 +33,7 @@ class FavoriteTest extends TestCase
         $title = Title::factory()->create();
 
         $response = $this->actingAs($user)
-            ->postJson('/api/favorites/' . $title->id . '/delete');
+            ->postJson('/api/user/favorites/' . $title->id . '/delete');
 
         $response->assertSuccessful();
 
@@ -50,7 +50,7 @@ class FavoriteTest extends TestCase
         $user->favorites()->attach($titles);
 
         $response = $this->actingAs($user)
-            ->getJson('/api/favorites');
+            ->getJson('/api/user/favorites');
 
         $response
             ->assertStatus(200)

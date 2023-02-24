@@ -25,4 +25,9 @@ class TitleController extends Controller
     {
         return TitleResource::collection(Title::where('name', 'LIKE', "%$request->keyword%")->paginate(10));
     }
+
+    public function trailer(Title $title)
+    {
+        return TitleResource::make($title);
+    }
 }

@@ -16,4 +16,9 @@ class Title extends Model
     {
         return $this->belongsToMany(User::class, 'favorite_user', 'user_id', 'title_id');
     }
+
+    public function trailer()
+    {
+        return $this->hasOne(Trailer::class);
+    }
 }

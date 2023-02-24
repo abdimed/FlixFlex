@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
@@ -20,11 +21,13 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'status_code' => '201',
+            'status' => 'success',
             'message' => 'registration was successful',
-            'user' => $user,
-            'auth_token' => $token,
-            'token_type' => 'Bearer',
+            'user' => UserResource::make($user),
+            'token' => [
+                'auth_token' => $token,
+                'token_type' => 'Bearer',
+            ]
         ], 201);
     }
 
@@ -33,7 +36,7 @@ class AuthController extends Controller
 
         if (!auth()->attempt($request->only('username', 'password'))) {
             return response()->json([
-                'status_code' => '401',
+                'status' => 'fail',
                 'message' => 'Invalid login details',
             ], 401);
         }
@@ -43,9 +46,12 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'status_code' => '201',
-            'auth_token' => $token,
-            'token_type' => 'Bearer',
-        ],201);
+            'status' => 'success',
+            'user' => UserResource::make($user),
+            'token' => [
+                'auth_token' => $token,
+                'token_type' => 'Bearer',
+            ]
+        ], 201);
     }
 }

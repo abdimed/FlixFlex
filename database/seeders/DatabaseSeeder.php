@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Trailer;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -22,7 +24,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $user =  \App\Models\User::factory()->create();
+        \App\Models\User::factory()->create();
 
         \App\Models\User::create([
             'username' => 'admin',
@@ -30,6 +32,8 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
-        \App\Models\Title::factory(30)->create();
+        \App\Models\Title::factory(30)
+            ->has(Trailer::factory())
+            ->create();
     }
 }
