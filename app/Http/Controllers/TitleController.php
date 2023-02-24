@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Resources\TitleResource;
 use App\Models\Title;
 
-use function PHPUnit\Framework\isEmpty;
 
 class TitleController extends Controller
 {

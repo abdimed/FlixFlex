@@ -26,4 +26,17 @@ class FavoriteTest extends TestCase
         $this->assertTrue($user->favorites->contains($title->id));;
     }
 
+    public function  test_user_can_remove_title_from_favorite_list()
+    {
+        $user = User::factory()->create();
+
+        $title = Title::factory()->create();
+
+        $response = $this->actingAs($user)
+            ->postJson('/api/title/' . $title->id . '/favorite/delete');
+
+        $response->assertSuccessful();
+
+        $this->assertFalse($user->favorites->contains($title->id));;
+    }
 }

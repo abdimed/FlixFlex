@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::controller(AuthController::class)
     ->group(
         function () {
-            Route::Post('register', 'register');
-            Route::Post('login', 'login');
+            Route::Post('/register', 'register');
+            Route::Post('/login', 'login');
         }
     );
 
@@ -35,5 +35,6 @@ Route::controller(FavoriteController::class)
     ->group(
         function () {
             Route::Post('/title/{title_id}/favorite/store', 'store');
+            Route::Post('/title/{title_id}/favorite/delete', 'delete');
         }
     );

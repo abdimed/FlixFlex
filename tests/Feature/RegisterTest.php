@@ -22,7 +22,7 @@ class RegisterTest extends TestCase
         $response = $this->postJson('/api/register', $user);
 
         $response
-            ->assertCreated()
+            ->assertStatus(201)
             ->assertJson(fn (AssertableJson $json) => $json->has('auth_token')->etc());
     }
 }

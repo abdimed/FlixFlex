@@ -20,7 +20,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'status' => 'success',
+            'status_code' => '201',
             'message' => 'registration was successful',
             'user' => $user,
             'auth_token' => $token,
@@ -33,6 +33,7 @@ class AuthController extends Controller
 
         if (!auth()->attempt($request->only('username', 'password'))) {
             return response()->json([
+                'status_code' => '401',
                 'message' => 'Invalid login details',
             ], 401);
         }
@@ -42,8 +43,9 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
+            'status_code' => '201',
             'auth_token' => $token,
             'token_type' => 'Bearer',
-        ]);
+        ],201);
     }
 }

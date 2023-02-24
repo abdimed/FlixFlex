@@ -22,7 +22,7 @@ class LoginTest extends TestCase
         ]);
 
         $response
-            ->assertOk()
+            ->assertStatus(201)
             ->assertJson(fn (AssertableJson $json) => $json->has('auth_token')->etc());
     }
 
@@ -35,7 +35,6 @@ class LoginTest extends TestCase
             'password' => 'wrongpassword'
         ]);
 
-        $response
-            ->assertStatus(401);
+        $response->assertStatus(401);
     }
 }

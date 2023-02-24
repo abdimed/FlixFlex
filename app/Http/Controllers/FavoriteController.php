@@ -17,9 +17,8 @@ class FavoriteController extends Controller
 
         $title = Title::findOrFail($title_id);
 
-        if ($user->favorites->contains($title_id)) {
+        if ($user->hasFavoriteTitle($title_id)) {
             return response()->Json([
-                'status' => 'fail',
                 'message' => 'you already have this title on your favorite list',
             ]);
         }
@@ -29,6 +28,28 @@ class FavoriteController extends Controller
         return response()->Json([
             'status' => 'success',
             'message' => $title->name . ' was successfuly added to ' . $user->username . 'favorite list',
+        ], 201);
+    }
+
+    public function delete($title_id)
+    {
+        $user_id = auth()->user()->id;
+
+        $user = User::findOrFail($user_id);
+
+        $title = Title::findOrFail($title_id);
+
+        if (!$user->hasFavoriteTitle($title_id)) {
+            return response()->Json([
+                'message' => 'you do not have this title on your favorite list',
+            ]);
+        }
+
+        $user->favorites()->detach($title_id);
+
+        return response()->Json([
+            'status' => 'success',
+            'message' => $title->name . ' was successfuly removed from ' . $user->username . 'favorite list',
         ], 201);
     }
 }
