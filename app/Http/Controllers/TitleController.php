@@ -28,6 +28,15 @@ class TitleController extends Controller
 
     public function trailer(Title $title)
     {
-        return TitleResource::make($title);
+        if (!$title->trailer()->exists())
+            return response()->json([
+                'title' => $title->name,
+                'message' => 'trailer not found',
+            ], 404);
+
+        return response()->json([
+            'title' => $title->name,
+            'trailer' => $title->trailer->url,
+        ], 200);
     }
 }

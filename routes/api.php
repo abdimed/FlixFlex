@@ -36,6 +36,6 @@ Route::controller(FavoriteController::class)
     ->middleware('auth:sanctum')
     ->group(function () {
         Route::get('/user/favorites', 'index');
-        Route::post('/user/favorites/{title_id}/store', 'store');
-        Route::post('/user/favorites/{title_id}/delete', 'delete');
+        Route::post('/user/favorites/{title}/store', 'store');
+        Route::post('/user/favorites/{title}/delete', 'delete');
     });

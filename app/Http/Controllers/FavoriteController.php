@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\TitleResource;
+use App\Models\Title;
 use App\Models\User;
 
 class FavoriteController extends Controller
@@ -17,20 +18,20 @@ class FavoriteController extends Controller
         return TitleResource::collection($user->favorites);
     }
 
-    public function store($title_id)
+    public function store(Title $title)
     {
         $user_id = auth()->user()->id;
 
         $user = User::findOrFail($user_id);
 
-        if ($user->favorites->contains($title_id)) {
+        if ($user->favorites->contains($title)) {
             return response()->Json([
                 'status' => 'fail',
                 'message' => 'you already have this title on your favorite list',
             ]);
         }
 
-        $user->favorites()->attach($title_id);
+        $user->favorites()->attach($title);
 
         return response()->Json([
             'status' => 'success',
@@ -38,20 +39,20 @@ class FavoriteController extends Controller
         ], 201);
     }
 
-    public function delete($title_id)
+    public function delete(Title $title)
     {
         $user_id = auth()->user()->id;
 
         $user = User::findOrFail($user_id);
 
-        if (!$user->favorites->contains($title_id)) {
+        if (!$user->favorites->contains($title)) {
             return response()->Json([
                 'status' => 'fail',
                 'message' => 'you do not have this title on your favorite list',
             ]);
         }
 
-        $user->favorites()->detach($title_id);
+        $user->favorites()->detach($title);
 
         return response()->Json([
             'status' => 'success',
