@@ -13,7 +13,6 @@ To install Flixflex API, follow these steps:
 7. Seed the database with sample data: ``php artisan db:seed``
 8. Start the development server: ``php artisan serve``
 
-  **Notice:** to run tests in sqlite db use: `php artisan test`  
 
 ### Usage:
 Flixflex API has the following endpoints:
